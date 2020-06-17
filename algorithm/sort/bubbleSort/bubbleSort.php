@@ -9,7 +9,7 @@
  */
 
 require_once __DIR__ . '/../uniqueRandom.php';
-
+//效率差：“交换排序”
 function bubbleSort(&$arr) : void
 {
 	for ($i = 0, $c = count($arr); $i < $c; $i++) {
@@ -64,6 +64,28 @@ function bubbleSortV3(&$arr) : void
 		if (!$swapped) break; //没有发生交换，算法结束
 	}
 }
+//冒泡：是要往上冒，才算的上是冒泡排序
+function bubbleSortV4(&$arr) : void
+{
+	$length = count( $arr );
+	$swap = true;
+	for( $outer = 0; $outer < $length && $swap; $outer++ ){
+	  $swap = false;
+	  // 当外部循环开始第一轮的时候，从倒数第一位开始往前对比，一直到与正数第一位比较完后终止
+	  // 当外部循环开始第一轮的时候，从倒数第一位开始往前对比，一直到与正数第二位比较完后终止
+	  for( $inner = $length - 1; $inner > $outer; $inner-- ){
+	    if( $arr[ $inner ] < $arr[ $inner - 1 ] ){
+	      $temp = $arr[ $inner ];
+	      $arr[ $inner ] = $arr[ $inner - 1 ];
+	      $arr[ $inner - 1 ] = $temp;
+	      $swap = true;
+	    }
+	  }
+	}
+}
+
+
+
 
 $arr = uniqueRandom(1, 100000, 5000);
 $start = microtime(true);
